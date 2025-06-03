@@ -11,3 +11,6 @@ Use Imputation with Mean, Median or Mode for the missing values of the following
 - current               (Technique: )
 - module_temperature    (Technique: )
 - cloud_coverage        (Technique: )
+
+
+Can compute installation_type using string_id

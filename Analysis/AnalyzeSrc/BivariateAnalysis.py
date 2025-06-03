@@ -145,6 +145,58 @@ class CategoricalFeaturesVsTargetAnalysis(BivariateAnalysisStrategy):
             plt.tight_layout()
             plt.show()
 
+
+# Concrete Strategy for Categorical vs Categorical Analysis
+# --------------------------------------------------------
+# This strategy analyzes the relationship between two categorical features using heatmap and stacked bar plot.
+class CategoricalVsCategoricalAnalysis(BivariateAnalysisStrategy):
+    def analyze(self, df: pd.DataFrame, feature1: str, feature2: str):
+        """
+        Plots the relationship between two categorical features using a heatmap and stacked bar plot.
+
+        Parameters:
+        df (pd.DataFrame): The dataframe containing the data.
+        feature1 (str): The name of the first categorical feature/column to be analyzed.
+        feature2 (str): The name of the second categorical feature/column to be analyzed.
+
+        Returns:
+        None: Displays a heatmap and stacked bar plot showing the relationship between the two categorical features.
+        """
+        # Create a contingency table
+        contingency_table = pd.crosstab(df[feature1], df[feature2], normalize='index')
+        
+        # Create figure with two subplots
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+        
+        # Plot heatmap
+        sns.heatmap(contingency_table, annot=True, fmt='.2%', cmap='YlOrRd', ax=ax1)
+        ax1.set_title(f'Heatmap of {feature1} vs {feature2}')
+        ax1.set_xlabel(feature2)
+        ax1.set_ylabel(feature1)
+        
+        # Plot stacked bar chart
+        contingency_table.plot(kind='bar', stacked=True, ax=ax2)
+        ax2.set_title(f'Stacked Bar Chart of {feature1} vs {feature2}')
+        ax2.set_xlabel(feature1)
+        ax2.set_ylabel('Proportion')
+        ax2.legend(title=feature2, bbox_to_anchor=(1.05, 1), loc='upper left')
+        
+        plt.tight_layout()
+        plt.show()
+        
+        # Print chi-square test results
+        from scipy.stats import chi2_contingency
+        chi2, p_value, dof, expected = chi2_contingency(pd.crosstab(df[feature1], df[feature2]))
+        print(f"\nChi-square test results:")
+        print(f"Chi-square statistic: {chi2:.2f}")
+        print(f"p-value: {p_value:.4f}")
+        print(f"Degrees of freedom: {dof}")
+        print("\nInterpretation:")
+        if p_value < 0.05:
+            print("There is a significant relationship between the two categorical variables (p < 0.05)")
+        else:
+            print("There is no significant relationship between the two categorical variables (p >= 0.05)")
+
 # Context Class that uses a BivariateAnalysisStrategy
 # ---------------------------------------------------
 # This class allows you to switch between different bivariate analysis strategies.
@@ -199,6 +251,10 @@ if __name__ == "__main__":
 
     # # Load the data
     # df = pd.read_csv('Dataset/Extracted/train.csv')
+
+    # # Analyzing relationship between two categorical features
+    # analyzer = BivariateAnalyzer(CategoricalVsCategoricalAnalysis())
+    # analyzer.execute_analysis(df, 'installation_type', 'manufacturer')
 
     # # Analyzing relationship between two numerical features
     # analyzer = BivariateAnalyzer(CategoricalFeaturesVsTargetAnalysis())
