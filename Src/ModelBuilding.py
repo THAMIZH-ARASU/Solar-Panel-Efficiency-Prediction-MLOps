@@ -220,24 +220,24 @@ class ModelBuilder:
 # Example usage
 if __name__ == "__main__":
     # Example DataFrame (replace with actual data loading)
-    # df = pd.read_csv('your_data.csv')
-    # X_train = df.drop(columns=['target_column'])
-    # y_train = df['target_column']
+    df = pd.read_csv('Dataset/Extracted/train.csv')
+    X_train = df.drop(columns=['efficiency'])
+    y_train = df['efficiency']
 
     # Example usage of different strategies
-    # model_builder = ModelBuilder(LinearRegressionStrategy())
+    model_builder = ModelBuilder(LinearRegressionStrategy())
     # trained_model = model_builder.build_model(X_train, y_train)
     
     # Switch to Random Forest
-    # model_builder.set_strategy(RandomForestStrategy())
-    # rf_model = model_builder.build_model(X_train, y_train)
+    model_builder.set_strategy(RandomForestStrategy())
+    rf_model = model_builder.build_model(X_train, y_train)
     
     # Switch to XGBoost
-    # model_builder.set_strategy(XGBoostStrategy())
-    # xgb_model = model_builder.build_model(X_train, y_train)
+    model_builder.set_strategy(XGBoostStrategy())
+    xgb_model = model_builder.build_model(X_train, y_train)
     
     # Switch to CatBoost
-    # model_builder.set_strategy(CatBoostStrategy())
-    # catboost_model = model_builder.build_model(X_train, y_train)
+    model_builder.set_strategy(CatBoostStrategy())
+    catboost_model = model_builder.build_model(X_train, y_train)
 
     pass
