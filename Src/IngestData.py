@@ -9,7 +9,7 @@ import pandas as pd
 # Define an abstract class for Data Ingestor
 class DataIngestor(ABC):
     @abstractmethod
-    def ingest(self, file_path: str) -> List[pd.DataFrame]:
+    def ingest(self, file_path: str):
         """Abstract method to ingest data from a given file."""
         pass
 
@@ -63,6 +63,14 @@ class ZipDataIngestor(DataIngestor):
         return dataframes
 
 
+# Implement a concrete class for CSV Ingestion
+class CSVDataIngestor(DataIngestor):
+    def ingest(self, file_path: str) -> pd.DataFrame:
+        if not file_path.endswith(".csv"):
+            raise ValueError("The provided file is not a .csv file.")
+        return pd.read_csv(file_path)
+
+
 # Implement a Factory to create DataIngestors
 class DataIngestorFactory:
     @staticmethod
@@ -70,6 +78,8 @@ class DataIngestorFactory:
         """Returns the appropriate DataIngestor based on file extension."""
         if file_extension == ".zip":
             return ZipDataIngestor()
+        elif file_extension == ".csv":
+            return CSVDataIngestor()
         else:
             raise ValueError(f"No ingestor available for file extension: {file_extension}")
 
@@ -89,7 +99,7 @@ if __name__ == "__main__":
     dataframes = data_ingestor.ingest(file_path)
 
     # Process each DataFrame
-    for i, df in enumerate(dataframes):
+    for i, df in enumerate(dataframes if isinstance(dataframes, list) else [dataframes]):
         print(f"\nDataFrame {i+1}:")
         print(df.head())  # Display the first few rows of each DataFrame
     pass

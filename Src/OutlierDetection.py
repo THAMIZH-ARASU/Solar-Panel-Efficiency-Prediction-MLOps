@@ -32,22 +32,31 @@ class ZScoreOutlierDetection(OutlierDetectionStrategy):
 
     def detect_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
         logging.info("Detecting outliers using the Z-score method.")
-        z_scores = np.abs((df - df.mean()) / df.std())
+        numeric_df = df.select_dtypes(include=[np.number])
+        z_scores = np.abs((numeric_df - numeric_df.mean()) / numeric_df.std())
         outliers = z_scores > self.threshold
+        # Reindex to match original DataFrame shape
+        outlier_mask = pd.DataFrame(False, index=df.index, columns=df.columns)
+        outlier_mask[outliers.columns] = outliers
         logging.info(f"Outliers detected with Z-score threshold: {self.threshold}.")
-        return outliers
+        return outlier_mask
 
 
 # Concrete Strategy for IQR Based Outlier Detection
 class IQROutlierDetection(OutlierDetectionStrategy):
     def detect_outliers(self, df: pd.DataFrame) -> pd.DataFrame:
         logging.info("Detecting outliers using the IQR method.")
-        Q1 = df.quantile(0.25)
-        Q3 = df.quantile(0.75)
+        numeric_df = df.select_dtypes(include=[np.number])
+        Q1 = numeric_df.quantile(0.25)
+        Q3 = numeric_df.quantile(0.75)
         IQR = Q3 - Q1
-        outliers = (df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR))
+        outliers = (numeric_df < (Q1 - 1.5 * IQR)) | (numeric_df > (Q3 + 1.5 * IQR))
+        # Always convert outliers to DataFrame
+        outliers = pd.DataFrame(outliers)
+        outlier_mask = pd.DataFrame(False, index=df.index, columns=df.columns)
+        outlier_mask[outliers.columns] = outliers
         logging.info("Outliers detected using the IQR method.")
-        return outliers
+        return outlier_mask
 
 
 # Context Class for Outlier Detection and Handling
