@@ -191,6 +191,56 @@ The dashboard is a powerful tool for tracking your ML workflow and debugging pip
 
 ---
 
+## 🏗️ Design Patterns & Best Practices
+
+### Design Patterns Used
+- **Strategy Pattern:** Used extensively for modularizing logic in data ingestion, missing value handling, feature engineering, outlier detection, model building, and EDA. This allows easy swapping and extension of algorithms and behaviors at runtime.
+- **Factory Pattern:** Used for creating data ingestors based on file type, enabling scalable and maintainable data ingestion logic.
+- **Modularization & Separation of Concerns:** The codebase is organized into clear modules (Steps, Pipelines, Src, Analysis) to ensure each component has a single responsibility and can be developed, tested, and maintained independently.
+
+### Best Practices Followed
+- **Production-Grade Logging:** All major actions, errors, and pipeline events are logged for traceability and debugging.
+- **Centralized Configuration:** All parameters and settings are managed via a single config file for easy customization and reproducibility.
+- **Experiment Tracking:** All model metrics, artifacts, and predictions are logged with MLflow for reproducibility and comparison.
+- **Extensibility:** The use of abstract base classes and modular steps makes it easy to add new features or algorithms.
+- **Reproducibility:** Pipelines, experiment tracking, and configuration management ensure results can be reliably reproduced.
+- **Clear Documentation:** The project is well-documented with docstrings, comments, and this README.
+
+---
+
+## 🖼️ Images
+
+Below are key images illustrating the system's architecture, pipelines, and results:
+
+![deployment_pipeline](images/deployment_pipeline.png)
+*Deployment Pipeline*
+
+![EDA1](images/EDA1.png)
+*Exploratory Data Analysis 1*
+
+![EDA2](images/EDA2.png)
+*Exploratory Data Analysis 2*
+
+![EDA3](images/EDA3.png)
+*Exploratory Data Analysis 3*
+
+![inference_pipeline](images/inference_pipeline.png)
+*Inference Pipeline*
+
+![mlflow_experiment_tracking](images/mlflow_experiment_tracking.png)
+*MLflow Experiment Tracking*
+
+![predictions](images/predictions.png)
+*Predictions Output*
+
+![running_inference](images/running_inference.png)
+*Running Inference*
+
+![train_pipeline](images/train_pipeline.png)
+*Training Pipeline*
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please open issues or pull requests for improvements, bug fixes, or new features.
