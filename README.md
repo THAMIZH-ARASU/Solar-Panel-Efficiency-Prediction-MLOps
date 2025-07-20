@@ -256,7 +256,7 @@ Contributions are welcome! Please open issues or pull requests for improvements,
 
 ## 📄 License
 
-[MIT License](LICENSE) (or your chosen license)
+This project is licensed under [MIT License](LICENSE) 
 
 ---
 
