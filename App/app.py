@@ -38,8 +38,8 @@ def show_about_tab():
     - Modular, production-ready, and extensible
     - Developed for robust solar data analysis and ML workflows
     
-    **Author:** Your Name
-    **GitHub:** [your-github-link](https://github.com/your-github)
+    **Author:** THAMIZHARASU SARAVANAN
+    **GitHub:** [your-github-link](https://github.com/THAMIZH-ARASU)
     """)
 
 st.set_page_config(page_title="Solar Power System Analyzer", layout="wide")
