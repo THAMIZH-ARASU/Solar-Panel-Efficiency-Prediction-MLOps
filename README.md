@@ -1,4 +1,4 @@
-# ⚡ Solar Power System Analyzer
+# ⚡ Solar Power System Analyzer - MLOps
 
 A robust, modular, and production-ready platform for solar power system data analysis, machine learning, and prediction. Built with **ZenML**, **Streamlit**, **MLflow**, and a rich Python data science stack, this project enables end-to-end workflows from data ingestion and EDA to model training, deployment, and inference—all with experiment tracking and a user-friendly web interface.
 
